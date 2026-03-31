@@ -13,8 +13,7 @@ venv/
 *.ckpt
 
 # Data
-data/raw/
-*.csv
+data/raw/*.zip
 
 # Jupyter
 .ipynb_checkpoints/
