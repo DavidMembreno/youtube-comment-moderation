@@ -6,14 +6,22 @@ __pycache__/
 venv/
 .venv/
 
-# Model weights
+# Model weights and checkpoints
 *.pt
 *.bin
 *.safetensors
 *.ckpt
+models/roberta_toxicity/
+models/roberta_toxicity_weighted/
+models/roberta_toxicity_v3/
+models/roberta_toxicity_v4/
 
 # Data
 data/raw/*.zip
+data/raw/spam_extra/*.zip
+
+# Notebooks output CSVs
+notebooks/*.csv
 
 # Jupyter
 .ipynb_checkpoints/
