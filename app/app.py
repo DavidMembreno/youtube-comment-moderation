@@ -156,7 +156,7 @@ elif page == "Batch Upload":
         threshold = st.slider("Confidence Threshold", 0.1, 0.9, 0.45, 0.05)
 
         if uploaded:
-            df = pd.read_csv('https://raw.githubusercontent.com/DavidMembreno/youtube-comment-moderation/main/data/processed/processed_toxicity.csv')
+            df = pd.read_csv(uploaded)
             st.write(f"Loaded {len(df)} rows")
             if 'text' not in df.columns:
                 st.error("CSV must contain a column named 'text'")
