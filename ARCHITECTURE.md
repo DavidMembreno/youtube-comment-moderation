@@ -2,8 +2,8 @@
 
 ## Overview
 A multi-layer comment moderation pipeline designed to process YouTube comments 
-and return a structured moderation recommendation. The system is built to 
-function as a realistic deployment-ready pipeline, not a simple binary classifier.
+and return a structured moderation recommendation. Built to function as a 
+realistic deployment-ready pipeline, not a simple binary classifier.
 
 ## Pipeline
 A comment enters the system and is processed sequentially through three layers 
@@ -26,9 +26,9 @@ address label imbalance across 160,568 labeled comments.
 The output probabilities are evaluated against confidence thresholds to 
 determine the appropriate moderation action.
 
-    confidence >= 0.85   auto_flag or auto_approve
-    confidence 0.50-0.85  human_review
-    confidence < 0.50    escalate
+    confidence >= 0.60   auto_flag or auto_approve
+    confidence 0.45-0.60  human_review
+    confidence < 0.45    auto_approve
 
 ## Output
 Every comment processed by the pipeline returns the following:
@@ -43,11 +43,11 @@ Every comment processed by the pipeline returns the following:
     }
 
 ## Deployment
-The system is deployed as a decoupled full stack application.
+The application is deployed as a Streamlit app on Streamlit Community Cloud.
+Models are hosted on HuggingFace Hub and loaded at runtime.
 
-    Backend:  FastAPI served on Railway
-    Frontend: React application deployed on Vercel
-    Models:   Hosted on HuggingFace Hub
+    App:    Streamlit Community Cloud
+    Models: HuggingFace Hub (DavidMembreno)
 
 ## Project Structure
 
@@ -62,14 +62,15 @@ The system is deployed as a decoupled full stack application.
     │       ├── processed_toxicity.csv
     │       └── processed_spam.csv
     ├── models/
-    │   ├── spam_classifier.pkl
-    │   └── roberta_toxicity/ (HuggingFace Hub)
+    │   └── spam_classifier.pkl
     ├── app/
-    │   ├── main.py (FastAPI)
-    │   └── pipeline.py
+    │   ├── app.py
+    │   ├── pipeline.py
+    │   └── requirements.txt
     ├── notebooks/
     │   ├── preprocessing.ipynb
     │   ├── modelselection.ipynb
+    │   ├── train_spam.ipynb
     │   └── train_toxicity.ipynb
     ├── evaluate/
     ├── ARCHITECTURE.md
@@ -82,13 +83,11 @@ Layer 1 is a Logistic Regression classifier with TF-IDF vectorization
 Trained on 7,865 YouTube spam comments achieving 93% accuracy and 0.98 ROC-AUC.
 
 Layer 2 is a fine-tuned RoBERTa model initialized from s-nlp/roberta_toxicity_classifier 
-and fine-tuned for multi-label classification across five toxicity categories. 
-Trained with focal loss and per-class weights to address label imbalance.
+and fine-tuned for multi-label classification across five toxicity categories 
+using focal loss and per-class weights over 6 epochs on an RTX 5070.
+Final macro F1: 0.70, weighted F1: 0.79.
 
 ## Data
-Training data is sourced from the following datasets and preprocessed into 
-a unified schema before training.
-
 Toxicity: Jigsaw Toxic Comment Dataset + YouTube Toxicity Data (160,568 rows)
 Spam: YouTube Spam Collection + supplementary spam datasets (7,865 rows)
 

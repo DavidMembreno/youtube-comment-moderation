@@ -26,6 +26,10 @@ chmod 600 ~/.kaggle/kaggle.json
 ## Every Time You Open a New Terminal
 source .venv/bin/activate
 
+## Running the App Locally
+cd app
+streamlit run app.py
+
 ## Downloading Datasets
 Processed datasets are already available in data/processed/ and do not 
 need to be re-downloaded. Raw datasets can be pulled from Kaggle if needed 
@@ -43,18 +47,6 @@ kaggle datasets download -d prashant111/youtube-spam-collection -p data/raw/spam
 ### Unzip
 unzip data/raw/filename.zip -d data/raw/foldername/
 
-## Running the Pipeline
-The backend is a FastAPI application. To run locally:
-
-cd app
-uvicorn main:app --reload
-
-The frontend is a React application. To run locally:
-
-cd frontend
-npm install
-npm run dev
-
 ## Project Structure
 youtube-comment-moderation/
 ├── data/
@@ -69,11 +61,13 @@ youtube-comment-moderation/
 ├── models/
 │   └── spam_classifier.pkl
 ├── app/
-│   ├── main.py
-│   └── pipeline.py
+│   ├── app.py
+│   ├── pipeline.py
+│   └── requirements.txt
 ├── notebooks/
 │   ├── preprocessing.ipynb
 │   ├── modelselection.ipynb
+│   ├── train_spam.ipynb
 │   └── train_toxicity.ipynb
 ├── evaluate/
 ├── ARCHITECTURE.md
@@ -81,9 +75,9 @@ youtube-comment-moderation/
 └── README.md
 
 ## Notes
-- Never commit model weights (*.pt, *.bin, *.safetensors) - they are in .gitignore
+- Never commit model weights (*.pt, *.bin, *.safetensors) — in .gitignore
 - Raw zip files are ignored by git
 - Processed datasets in data/processed/ are tracked and committed
 - Always work from project root, not subdirectories
 - Models are hosted on HuggingFace Hub, not committed to this repo
-- This project was developed and trained on WSL2 with an RTX 5070
+- Developed and trained on WSL2 with an RTX 5070
