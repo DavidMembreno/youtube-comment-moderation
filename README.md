@@ -5,7 +5,9 @@ YouTube comments and returns structured moderation recommendations. Built
 as a portfolio project to demonstrate applied ML, system design, and deployment.
 
 ## Live Demo
-[Streamlit App — add URL here once deployed]
+[YouTube Comment Moderator](https://youtube-comment-moderation.streamlit.app/)
+
+![QR Code](assets/Comment_Moderation_QR.png)
 
 ## What it does
 A comment enters the pipeline and passes through three sequential layers. 
